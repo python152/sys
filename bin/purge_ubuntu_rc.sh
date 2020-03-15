@@ -1,0 +1,4 @@
+#!/bin/bash
+
+dpkg --list |grep "^rc" | cut -d " " -f 3 | xargs dpkg --purge
+

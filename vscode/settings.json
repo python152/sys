@@ -1,0 +1,102 @@
+{
+  "files.exclude": {
+    "**/.git": true,
+    "**/.svn": true,
+    "**/.hg": true,
+    "**/CVS": true,
+    "**/.DS_Store": true,
+    "**/*.pyc": true,
+    "**/*.idx": true,
+    "**/*.fls": true,
+    "**/*.dvi": true,
+    "**/*.aux": true,
+    "**/*.blg": true,
+    "**/*.bbl": true,
+    "**/*.gz": true,
+    "**/*.toc": true
+  },
+  "workbench.statusBar.feedback.visible": false,
+  "workbench.activityBar.visible": true,
+  "editor.minimap.enabled": false,
+  "explorer.confirmDelete": false,
+  "files.autoSave": "afterDelay",
+  "C_Cpp.clang_format_path": "/usr/local/bin/clang-format",
+  "C_Cpp.clang_format_fallbackStyle": "none",
+  "C_Cpp.clang_format_style": "file",
+  "code-runner.runInTerminal": true,
+  "C_Cpp.default.cppStandard": "c++11",
+  "C_Cpp.default.cStandard": "c11",
+  "code-runner.executorMap": {
+      "cpp": "g++ $fileName -o $fileNameWithoutExt && ./$fileNameWithoutExt",
+      "python": "python3"
+   },
+  "code-runner.clearPreviousOutput": true,
+
+  "[latex]": {
+    "editor.wordWrap": "on",
+    "editor.wordWrapColumn": 78,
+    "editor.quickSuggestions": {
+      "other": true,
+      "comments": false,
+      "strings": false
+    }
+  },
+
+  "[bibtex]": {
+    "editor.wordWrap": "on",
+    "editor.wordWrapColumn": 78
+  },
+
+  "breadcrumbs.enabled": true,
+  "editor.formatOnType": true,
+  "[markdown]": {
+    "editor.formatOnSave": true,
+    "editor.wordWrap": "on",
+    "editor.renderWhitespace": "all",
+    "editor.acceptSuggestionOnEnter": "off"
+  },
+  "editor.fontFamily": "Fira Code, Bitstream Vera Sans Mono, Consolas, Hack, Menlo",
+  "editor.fontLigatures": false,
+  "editor.lineHeight": 20,
+  "editor.formatOnPaste": true,
+  "editor.fontSize": 13,
+  "window.zoomLevel": 0,
+  "files.maxMemoryForLargeFilesMB": 8192,
+  "explorer.confirmDragAndDrop": false,
+  "workbench.colorTheme": "Blackboard",
+  "python.pythonPath": "/anaconda3/envs/pydata/bin/python",
+  "python.formatting.provider": "black",
+  "python.jediEnabled": false,
+  "latex-workshop.latex.clean.subfolder.enabled": true,
+  "latex-workshop.message.badbox.show": false,
+  "latex-workshop.view.pdf.viewer": "tab",
+  "latex-workshop.chktex.enabled": false,
+  "latex-workshop.message.update.show": false,
+  "editor.suggestSelection": "first",
+  "vsintellicode.modify.editor.suggestSelection": "automaticallyOverrodeDefaultValue",
+  "code-runner.fileDirectoryAsCwd": true,
+  "python.linting.flake8CategorySeverity.W": "Error",
+  "html.format.wrapLineLength": 72,
+  "terminal.integrated.inheritEnv": false,
+  "git.ignoreLegacyWarning": true,
+  "terminal.integrated.shell.osx": "/bin/zsh",
+  "go.inferGopath": true,  
+  "terminal.integrated.env.osx": {
+    "GOPATH": "${workspaceRoot}"
+  },
+  "sync.gist": "822c5dd94a75b8873c7f46b7a6d73436",
+  "sync.autoDownload": true,
+  "sync.autoUpload": true,
+  "go.formatTool": "goimports",
+  "go.lintFlags": [
+    "-config c.toml"
+  ],
+  "go.lintTool": "revive",
+  "go.UseLanguageServer": true,
+  "go.docTool": "gogetdoc",
+  "files.autoSaveDelay": 30000,
+  "go.useLanguageServer": true,
+  "go.testFlags": [
+    "-v"
+  ]
+}
