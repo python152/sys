@@ -64,7 +64,7 @@
   "files.maxMemoryForLargeFilesMB": 8192,
   "explorer.confirmDragAndDrop": false,
   "workbench.colorTheme": "Blackboard",
-  "python.pythonPath": "/anaconda3/envs/pydata/bin/python",
+  "python.pythonPath": "/opt/anaconda3/bin/python",
   "python.formatting.provider": "black",
   "python.jediEnabled": false,
   "latex-workshop.latex.clean.subfolder.enabled": true,
@@ -89,7 +89,7 @@
   "sync.autoUpload": true,
   "go.formatTool": "goimports",
   "go.lintFlags": [
-    "-config c.toml"
+    "-config ${workspaceFolder}/c.toml"
   ],
   "go.lintTool": "revive",
   "go.UseLanguageServer": true,
