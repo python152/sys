@@ -189,7 +189,7 @@ alias docker-image-wipe='docker image rm $(docker image ls -q) -f'
 # %m hostname up to the first dot
 # %* display 24 hr time format
 PROMPT='
-$USER@%M ($CONDA_DEFAULT_ENV) ${_current_dir} $(git_prompt_info) $(ruby_prompt_info)
+$USER@%M $CONDA_DEFAULT_ENV ${_current_dir} $(git_prompt_info) $(ruby_prompt_info)
 %{%(!.%F{red}.%F{white})%}%{$fg_bold[white]%}%* ▶%{$resetcolor%} '
 
 # current directory path customization
@@ -198,7 +198,7 @@ typeset +H _current_dir="%{$fg_bold[yellow]%}%3~%{$reset_color%} "
 
 
 export GOPATH="$HOME/go"
-export PATH="$HOME/sys/bin:$HOME/go/bin:$PATH"
+export PATH="$HOME/sys/bin:$HOME/go/bin:/home/linuxbrew/.linuxbrew/bin:$PATH"
 
 # >>> conda initialize >>>
 # !! Contents within this block are managed by 'conda init' !!
