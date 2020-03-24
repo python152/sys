@@ -1,0 +1,227 @@
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Vim configuration file
+"
+" vim: set sw=4 ts=4 sts=4 et tw=78 foldmarker={,} foldlevel=0 foldmethod=marker
+"
+" First time setup:
+"
+"   For the most part, this has been automated.
+"   (1) clone sys
+"   (2) ln -s sys/vim/vimrc .vimrc
+"   (3) run "vim", the first time it will complain about missing "peaksea"
+"   (4) Within vim, run ":PlugInstall"
+"   (5) All missing plugins will be fetched from Internet
+"   (6) exit and re-run
+"
+" Bundle manager: vim-plug
+"
+"       :PlugList       - lists configured plugins
+"       :PlugInstall    - install plugins; append `!` to update or just :PluginUpdate
+"       :PlugSearch foo - search for foo; append `!` to refresh local cache
+"       :PlugClean      - confirms removal of unused plugins; append `!` to auto-approve removal
+"
+" Add new plugins
+"
+"       ref to the Environment and Plugin section
+"       add an entry there
+"
+" Reload .vimrc
+"
+"       :so %
+"
+" Leader key
+"
+"       default: \
+"
+" Toggle NERD tree
+"
+"       Ctrl-e  toggle
+"       F3      toggle
+"       \-e     show current file in tree
+"
+" Toggle Tagbar
+"
+"       \-tt    toggle
+"
+" Pane Navigation
+"
+"       Ctrl-w  arrow move
+"       Ctrl-v  vertical split
+"       Ctrl-s  horizontal split
+"
+" Python Flake8 Check
+"
+"       \-fc    check
+"
+" Code format (C/C++) using clang-format
+"
+"       \-ff    code format
+"
+" Platform Note:
+"
+"   Both 'sys' and '.vim' are physically put under ' /ccs/techint/home/fwang2'
+"   and sym-linked into '/ccs/home/fwang2' on DTN or Titan. This way, only one
+"   copy needs to be maintained and both are accessible.
+"
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Bootstrap vim-plug {
+
+if empty(glob("~/.vim/autoload/plug.vim"))
+     execute '!mkdir -p ~/.vim/autoload'
+     execute '!curl -fLo ~/.vim/autoload/plug.vim https://raw.github.com/junegunn/vim-plug/master/plug.vim'
+endif
+
+"}
+
+" Environment and Plugin {
+    set nocompatible
+    filetype off
+    set tabstop=4       " The width of a TAB is set to 4
+    set shiftwidth=4    " Indents will have a width of 4
+    set expandtab       " Expand TABs to spaces
+    set background=dark " Make sure we stay in dark
+
+    call plug#begin('~/.vim/plugged')
+
+    Plug 'junegunn/vim-easy-align'
+    Plug 'vim-airline/vim-airline'
+    Plug 'vim-airline/vim-airline-themes'
+    Plug 'https://github.com/vim-scripts/peaksea'
+    Plug 'kien/ctrlp.vim'
+    Plug 'scrooloose/syntastic'         " Syntax checking
+    Plug 'nvie/vim-flake8'
+    Plug 'tmhedberg/SimpylFold'         " Python folding
+    Plug 'scrooloose/nerdtree'
+    Plug 'jistr/vim-nerdtree-tabs'
+    Plug 'tpope/vim-fugitive'           " Git
+    Plug 'majutsushi/tagbar'
+    Plug 'rhysd/vim-clang-format'       " C/C++ code format
+    Plug 'Chiel92/vim-autoformat'       " Python autoforamt
+
+    " All Plug command should happen before this line
+    call plug#end()
+
+"}
+
+" General {
+    filetype plugin indent on           " Automatically detect file types
+    syntax on                           " Syntax highlighting
+    set mouse=a                         " Auto enable mouse usage
+    set mousehide                       " Hide mouse cursor when typing
+    scriptencoding utf-8
+    colorscheme peaksea
+
+    set showmode                        " Display current mode
+    set cursorline                      " Highlight current line
+    set backspace=indent,eol,start      " Backspace for dummies
+    set number                          " Line numbers on
+    set showmatch                       " Showing matching brackets/parenthesis
+    set hlsearch                        " Highlight search terms
+    set ignorecase                      " Case insenstive search
+
+    highlight CursorLine   cterm=NONE ctermbg=darkred ctermfg=white guibg=darkred guifg=white
+    highlight CursorColumn cterm=NONE ctermbg=darkred ctermfg=white guibg=darkred guifg=white
+
+    nnoremap F gqap                     " Shift-F as format
+    set clipboard=unnamed               " Using system clipboard
+
+
+" }
+
+
+" Code Formatting {
+"   map to <Leader>cf in C++ code
+    autocmd FileType c,cc,cpp,objc nnoremap <buffer><Leader>ff :<C-u>ClangFormat<CR>
+    autocmd FileType c,cc,cpp,objc vnoremap <buffer><leader>ff :ClangFormat<CR>
+    "------------------------------------
+    " enable autoformatting, disabled by default
+    " as this mess up existing code in repo
+    " -----------------------------------
+    " autocmd FileType c,cpp  ClangFormatAutoEnable
+" }
+
+" Status Line {
+    set laststatus=2                    " This is needed to enable airline
+    let g:airline_theme='dark'
+" }
+
+" Customize text file: spell check, wrap text {
+if has("autocmd")
+        au BufNewFile,BufRead,BufEnter *.txt,*.tex,*.md
+                    \ set tw=78 |
+                    \ set nonumber |
+                    \ set spell spelllang=en_us
+        " auto remove trailing spaces
+        " autocmd BufWritePre * :%s/\s\+$//e
+
+endif "has("autocmd")
+
+" }
+
+" Auto expand {
+"
+"
+    abbr    ep-     % ---------------------------------------------------------------
+    abbr    ep=     % ===============================================================
+    abbr    ep#     # ---------------------------------------------------------------
+
+" }
+
+" Folding {
+" enable folding with the spacebar
+    set foldmethod=indent
+    nnoremap <space> za
+"}
+
+" NERD Tree  {
+
+    map <C-e> <plug>NERDTreeTabsToggle<CR>
+    let NERDTreeShowBookmarks=1
+    let NERDTreeIgnore=['\.pyc$', '^\.git$', '\~$'] "ignore files in NERDTree
+    map <leader>e :NERDTreeFind<CR>
+    map <F3> :NERDTreeToggle<CR>
+
+"}
+
+" Tagbar {
+    nnoremap <silent> <leader>tt :TagbarToggle<CR>
+"}
+
+" Syntastic {
+" check file syntax on open, otherwise, it check syntax after saving the file
+"
+"
+    let g:syntastic_check_on_open = 1
+" }
+
+" Flake8 {
+    noremap <leader>fc :call Flake8()<CR>
+" }
+
+" Python Autoforamt {
+    let g:formatter_yapf_style = 'pep8'
+    noremap <leader>ff :Autoformat<CR>
+" }
+
+" Fugitive (git) {
+		nnoremap <silent> <leader>gs :Gstatus<CR>
+		nnoremap <silent> <leader>gd :Gdiff<CR>
+		nnoremap <silent> <leader>gc :Gcommit<CR>
+		nnoremap <silent> <leader>gb :Gblame<CR>
+		nnoremap <silent> <leader>gl :Glog<CR>
+		nnoremap <silent> <leader>gp :Git push<CR>
+		nnoremap <silent> <leader>gr :Gread<CR>
+		nnoremap <silent> <leader>gw :Gwrite<CR>
+		nnoremap <silent> <leader>ge :Gedit<CR>
+		" Mnemonic _i_nteractive
+		nnoremap <silent> <leader>gi :Git add -p %<CR>
+		nnoremap <silent> <leader>gg :SignifyToggle<CR>
+"}
+
+let windows10=$WINDOWS10
+if windows10 == '0'
+  set t_ku=(ctrl+v , UP arrow)
+  set t_kd=(ctrl+v , DOWN arrow)
+  set t_kr=(ctrl+v , RIGHT arrow)
+  set t_kl=(ctrl+v , LEFT arrow)
+endif
