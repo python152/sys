@@ -77,5 +77,4 @@ fi
 alias emacs="emacs -nw"
 alias rm="rm -i"
 
-export set GLOBUS_LOCATION=/opt/globus
-PATH=$PATH:/opt/globus/bin:$HOME/bluecloth
+PATH=$HOME/go/bin:$PATH:/home/linuxbrew/.linuxbrew/bin
