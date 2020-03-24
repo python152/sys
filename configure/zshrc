@@ -192,14 +192,11 @@ alias docker-container-wipe='docker container rm $(docker container ls -q)'
 alias docker-image-wipe='docker image rm $(docker image ls -q) -f'
 
 
-# -------------------------------------------
-#            zshrc
-# -------------------------------------------
 
 # %m hostname up to the first dot
 # %* display 24 hr time format
 PROMPT='
-$USER@%M $(conda_prompt_info) ${_current_dir} $(git_prompt_info) $(ruby_prompt_info)
+$USER@%M $(conda_prompt_info) ${_current_dir} $(git_prompt_info)
 %{%(!.%F{red}.%F{white})%}%{$fg_bold[white]%}%* ▶%{$resetcolor%} '
 
 # current directory path customization
