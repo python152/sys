@@ -143,6 +143,7 @@ alias hub="ssh -X -I /usr/local/lib/opensc-pkcs11.so fwang2@hub.ccs.ornl.gov"
 alias hubsftp="sftp -o "SmartcardDevice=/usr/local/lib/opensc-pkcs11.so" fwang2@hub.ccs.ornl.gov"
 alias testbed-mgmt1="ssh fwang2@testbed-mgmt1"
 alias pike-mgmt1="ssh fwang2@pike-mgmt1"
+alias rhea="ssh -X -I /usr/local/lib/opensc-pkcs11.so fwang2@rhea.ccs.ornl.gov"
 
 # need to go into cave first
 alias lustre-mgmt1="ssh fwang2@lustre-mgmt1"
