@@ -1,0 +1,627 @@
+#
+# .bashrc by Feiyi Wang
+#
+
+# Source global definitions
+if [ -f /etc/bashrc ]; then
+	. /etc/bashrc
+fi
+
+#-------------------------------------------
+# Check Lmod
+#-------------------------------------------
+if [ -f  /usr/local/opt/lmod/init/profile ]; then
+    .  /usr/local/opt/lmod/init/profile
+fi
+
+#--------------------------------------------
+#  Fix terminal display encoding
+#--------------------------------------------
+
+export LANG=en_US.UTF-8
+
+#--------------------------------------------
+# Git completion and git friendly shell
+#--------------------------------------------
+
+function parse_git_dirty {
+  [[ $(git status 2> /dev/null | tail -n1) != *"nothing to commit"* ]] && echo "*"
+}
+
+function parse_git_branch {
+    git branch --no-color 2> /dev/null | sed -e '/^[^*]/d' -e "s/* \(.*\)/[\1$(parse_git_dirty)]/"
+}
+
+##
+## color working directory: 
+##  \[\e[33;1m\]\w\[\e[0m\]
+
+
+if [ -f $HOME/sys/configure/git-prompt.sh ]; then
+    source $HOME/sys/configure/git-prompt.sh
+    if [ $(id -u) -eq 0 ]; then
+        PS1='\u@\H: \w$(__git_ps1 "[\[\e[0;32m\]%s\[\e[0m\]\[\e[0;33m\]$(parse_git_dirty)\[\e[0m\]]")\n\t # '
+    else
+        PS1='\[\e[0m\]\u@\H: \[\e[31;1m\]\w\[\e[0m\]$(__git_ps1 "[\[\e[0;32m\]%s\[\e[0m\]\[\e[0;33m\]$(parse_git_dirty)\[\e[0m\]]")\n\[\e[1m\]\t\[\e[0m\] $ '
+    fi
+else
+    PS1="\u@\h \w$ "
+fi
+
+
+if [ -f $HOME/sys/configure/git-completion.bash ]; then
+    source $HOME/sys/configure/git-completion.bash
+fi
+
+#--------------------------------------------
+# User specific aliases and functions
+#--------------------------------------------
+
+
+OS=`uname -s`
+
+export VNC_VIA_CMD="/usr/bin/ssh -l fwang2 -f -L %L:%H:%R %G sleep 20"
+export VNC_DISPLAY=':49'
+export SVN_EDITOR=vim
+
+#---------------------------------------------
+# Set up my system home
+#---------------------------------------------
+if [ -d $HOME/sys ]; then
+    export SYSHOME=$HOME/sys
+fi
+
+
+#-----------------------------------------------
+# python configuration
+#-----------------------------------------------
+
+
+#-----------------------------------------------
+# vim configuration
+#-----------------------------------------------
+
+#-----------------------------------------------
+# subversion configuration
+#-----------------------------------------------
+
+#if [ -d $HOME/subversion166 ]; then
+#    export PATH=$HOME/subversion166/bin:$PATH
+#    export LIBRARY_PATH=$HOME/subversion166/lib:$LIBRARY_PATH
+#    export LD_LIBRARY_PATH=$HOME/subversion166/lib:$LD_LIBRARY_PATH
+#    export INCLUDE_PATH=$HOME/subversion166/include:$INCLUDE_PATH
+#    export MAN_PATH=$HOME/subversion166/share/man:$MAN_PATH
+#fi
+
+if [ -d /opt/subversion ]; then
+    export SVN_HOME=/opt/subversion
+fi
+
+#-----------------------------------------------
+# evince configuration
+#-----------------------------------------------
+
+if [ -d /usr/bin/evince ]; then
+    alias open="evince"
+fi
+
+
+
+#-----------------------------------------------
+# /opt/local/bin configuration
+#-----------------------------------------------
+
+if [ -d /opt/local/bin ]; then
+    export PATH=/opt/local/bin:$PATH
+fi
+
+
+
+
+# -----------------------------------------------------
+# Git configuration
+# $HOME/system/bin/setup_git.sh
+# -----------------------------------------------------
+export GIT_AUTHOR_NAME="Feiyi Wang"
+export GIT_AUTHOR_EMAIL="fwang2@gmail.com"
+export GIT_EDITOR=vim
+
+
+# ------------------------------------------------------
+# enable color support of ls and also add handy aliases
+# this setup only applies to Linux environment
+# ------------------------------------------------------
+if [[ "$TERM" != "dumb" && "$OS" == "Linux" ]]; then
+    [ -e "$HOME/.dircolors" ] && DIR_COLORS="$HOME/.dircolors"
+    [ -e "$DIR_COLORS" ] || DIR_COLORS=""
+#    eval "`dircolors -b $DIR_COLORS`"
+    #alias ls='ls -F --color=auto'
+    alias ls='ls -F'
+    alias dir='ls --color=auto --format=vertical'
+    alias vdir='ls --color=auto --format=long'
+elif [ "$OS" == "Darwin" ]; then
+    export LSCOLORS="Dxfxcxdxbxegedabagacad"
+fi
+
+# ------------------------------------------------------
+# set up pgsql
+# ------------------------------------------------------
+
+if [ -d /opt/pgsql ]; then
+    export PGHOME=/opt/pgsql
+    export PGDATA=/opt/pgsql/data
+fi
+
+# ------------------------------------------------------
+# set up  java
+# ------------------------------------------------------
+
+if [ -d /opt/jdk ]; then
+    export JAVA_HOME=/opt/jdk
+fi
+
+#elif [ -d /System/Library/Frameworks/JavaVM.framework/Home ]; then
+#    export JAVA_HOME=/System/Library/Frameworks/JavaVM.framework/Home
+#fi
+
+
+# ------------------------------------------------------
+# set up ant
+# ------------------------------------------------------
+
+if [ -d /opt/ant ]; then
+    export ANT_HOME=/opt/ant
+fi
+
+# ------------------------------------------------------
+# set up maven
+# ------------------------------------------------------
+
+if [ -d /opt/maven ]; then
+    export MAVEN_HOME=/opt/maven
+    export MAVEN_OPTS="-Xmx1024m -Xms512m"
+fi
+
+# ------------------------------------------------------
+# set up Android
+# ------------------------------------------------------
+
+if [ -d $HOME/Android-Development ]; then
+    export ANDROID_HOME=$HOME/Android-Development
+    export ANDROID_NDK=$ANDROID_HOME/ndk
+    export NDKROOT=$ANDROID_HOME/ndk
+    export PATH=$ANDROID_HOME/sdk/platform-tools:$PATH
+    export PATH=$NDKROOT:$PATH
+fi
+
+# ------------------------------------------------------
+# setup tomcat
+# ------------------------------------------------------
+
+#if [ -d /opt/tomcat ]; then
+#    export CATALINA_HOME=/opt/tomcat
+#fi
+
+
+# ------------------------------------------------------
+# setup artifactory
+# ------------------------------------------------------
+if [ -d /opt/artifactory ]; then
+    export ARTIFACTORY_HOME=/opt/artifactory
+fi
+
+if [ -d /opt/gitmon ]; then
+    export GITMON=/opt/gitmon
+fi
+
+# ----------------------------------------------
+# setup jython
+# ----------------------------------------------
+if [ -d /opt/jython ]; then
+    export JYTHON_HOME=/opt/jython
+fi
+
+
+#---------------------------------------------
+# Setup CCM (Cassandra Cluster Manager
+#---------------------------------------------
+
+if [ -d $HOME/ccm ]; then
+    export CCM_HOME=$HOME/ccm
+fi
+
+#---------------------------------------------
+# Set up ESG
+#---------------------------------------------
+
+if [[ "$HOSTNAME" == "esg2-sdnl1.ccs.ornl.gov" ||
+    "$HOSTNAME" == "esg2-sdn1.ccs.ornl.gov" ||
+    "$HOSTNAME" == "esg2-sdnn1.ccs.ornl.gov" ]]; then
+    echo "ESG env setup"
+    source $HOME/esg2/esg.env
+    export HSI_HOME=/opt/public/bin
+fi
+
+if [ "$HOSTNAME" == "esg-tb.ornl.teragrid.org" ]; then
+    echo "ESG TB env setup"
+    source /etc/esg.env
+    export MYPROXY_SERVER_PORT=7512
+    export MYPROXY_SERVER=esg-gw.ornl.teragrid.org
+fi
+
+if [ -d /usr/local/esg2/bestman ]; then
+    export PATH=/usr/local/esg2/bestman/bin:$PATH
+fi
+
+#--------------------------------------------------------
+# setup meld
+#--------------------------------------------------------
+
+if [ -d /opt/meld ]; then
+    export PATH=/opt/meld/bin:$PATH
+fi
+
+#--------------------------------------------------------
+# setup tex
+#--------------------------------------------------------
+
+if [ -d /usr/texbin ]; then
+    export PATH=/usr/texbin:$PATH
+fi
+
+#--------------------------------------------------------
+#  setup docker
+#--------------------------------------------------------
+
+docker-ip() {
+    boot2docker ip 2> /dev/null
+}
+
+
+PATH=$HSI_HOME:$PYTHON_HOME/bin:$JYTHON_HOME/bin:$JAVA_HOME/bin:$ANT_HOME/bin:$PATH
+PATH=$SYSHOME/bin:$PGHOME/bin:$GIT_HOME/bin:$RUBY_HOME/bin:$SVN_HOME/bin:$PATH
+PATH=$ARTIFACTORY_HOME/bin:$PATH
+PATH=$VIM_HOME/bin:$PATH
+PATH=$MAVEN_HOME/bin:/usr/local/bin:/usr/local/sbin:$PATH:$CCM_HOME
+
+
+## set file permission
+umask 022
+
+function gitadd(){
+    #if [[ ${1: -3} == ".sh" ]]; then
+        git update-index --chmod=+x $1
+    #fi
+    git add $1
+}
+alias gitadd='gitadd'
+
+
+
+#---------------------------------------------------------
+#  Rhea specific
+#---------------------------------------------------------
+
+if [[ $HOSTNAME = rhea* ]]; then
+    module list
+fi
+
+#---------------------------------------------------------
+# Commons of Rhea, DTN and Titan
+#---------------------------------------------------------
+
+
+if [[ $HOSTNAME = titan* ]] || [[ $HOSTNAME = dtn* ]] || [[ $HOSTNAME = rhea* ]] \
+        || [[ $HOSTNAME = chester* ]] ; then
+    module load git
+    module load vim
+    export PATH=/ccs/home/fwang2/local/bin:$PATH
+    export PKG_CONFIG_PATH=/ccs/home/fwang2/local/lib/pkgconfig:$PKG_CONFIG_PATH
+    export LD_LIBRARY_PATH=/ccs/home/fwang2/local/lib:$LD_LIBRARY_PATH
+fi
+
+if [[ $HOSTNAME = hub* ]]; then
+    export PATH=/ccs/techint/home/fwang2/local/bin:$PATH
+fi
+
+
+## CUDA
+if [ -d /Developer/NVIDIA/CUDA-6.5 ]; then
+    export PATH=/Developer/NVIDIA/CUDA-6.5/bin:$PATH
+    export DYLD_LIBRARY_PATH=/Developer/NVIDIA/CUDA-6.5/lib:$DYLD_LIBRARY_PATH
+fi
+
+#--------------------------------------------------------
+#  setup all the aliases
+#--------------------------------------------------------
+
+
+alias lu1="ssh fwang2@192.168.92.155"
+alias lu2="ssh fwang2@192.168.92.156"
+alias lu3="ssh fwang2@192.168.92.161"
+alias pigeon-lu1="ssh f7b@172.16.6.238"
+alias dtn="ssh fwang2@dtn.ccs.ornl.gov"
+alias pcircle="source ~/app-pcircle/bin/activate"
+alias c="git pull; if [ $? -eq 0 ]; then git commit -a; fi"
+alias rhea="ssh fwang2@rhea.ccs.ornl.gov"
+export AT1="/lustre/atlas1/stf008/scratch/fwang2"
+export AT2="/lustre/atlas2/stf008/scratch/fwang2"
+
+##############
+# git related
+##############
+
+alias git_reset='git reset --hard ORIG_HEAD'
+alias git_merge_devel='git merge --no-commit --no-ff devel'
+alias git-list-authors='git log --all --pretty="format:%an <%aE>" | sort -u'
+
+
+alias rm="rm -i"
+alias ls="ls -F"
+alias ll="ls -l"
+alias vi="vim"
+
+# ORNL TESTEBED
+alias arthur="ssh fwang2@arthur-login1"
+alias lgmgmt1="ssh fwang2@lgmgmt1"
+alias testbed-mgmt1="ssh fwang2@testbed-mgmt1"
+alias pike-mgmt1="ssh fwang2@pike-mgmt1"
+
+# need to go into cave first
+alias lustre-mgmt1="ssh fwang2@lustre-mgmt1"
+alias sudo-mgmt="sudo /opt/eas/bin/eash"
+
+# ORNL COMPUTING RESOURCES
+alias lfs-mgmt1="ssh fwang2@lfs-mgmt1.ccs.ornl.gov"
+alias aicip="ssh f7b@aicip.eecs.utk.edu"
+alias panda="ssh f7b@panda.eecs.utk.edu"
+alias login1="ssh f7b@login1.ornl.gov"
+alias ccshome="ssh -I /usr/local/lib/opensc-pkcs11.so fwang2@home.ccs.ornl.gov"
+alias hub="ssh -X -I /usr/local/lib/opensc-pkcs11.so fwang2@hub.ccs.ornl.gov"
+alias hubsftp="sftp -o "SmartcardDevice=/usr/local/lib/opensc-pkcs11.so" fwang2@hub.ccs.ornl.gov"
+
+alias tick-mgmt="ssh fwang2@tick-mgmt.ccs.ornl.gov"
+if [ -f /usr/local/bin/vim ]; then
+    alias vi="/usr/local/bin/vim"
+else
+    alias vi="vim"
+fi
+
+
+alias debug4="qsub -I -A stf008 -q debug -l nodes=4,walltime=60:00"
+alias debug1="qsub -I -A stf008 -q debug -l nodes=1,walltime=60:00"
+alias titan4="qsub -I -A stf008 -l nodes=4,walltime=60:00"
+
+alias titan_all="qsub -I -A stf008 -q batch -l nodes=18650,walltime=03:00:00"
+alias titan="ssh fwang2@titan.ccs.ornl.gov"
+alias vim_refresh_bundle="vim +BundleInstall! +BundleClean +q"
+alias worf="ssh fwang2@worf.local"
+alias myjob="qstat -u fwang2"
+alias luapdf="latexmk -pdflatex=lualatex -pdf"
+alias texpdf="latexmk -pdf"
+alias lvim="/ccs/techint/home/fwang2/vim74/bin/vim"
+
+# PEAK and SUMMIT
+
+alias peak="ssh -X peak.olcf.ornl.gov"
+alias summitdev="ssh -X summitdev"
+alias summit="ssh -X summit"
+alias summit_load="module load gcc boost"
+alias summit_unload="module unload gcc boost"
+alias summit_debug1="bsub -P STF008 -nnodes 1 -W 60 -alloc_flags gpumps -Is $SHELL"
+alias summit_debug2="bsub -P STF008 -nnodes 2 -W 60 -alloc_flags gpumps -Is $SHELL"
+
+
+
+# TDS hardware: atlas-tds-mds1, atlas-tds-oss[1-8]
+alias tds-mds="atlas-tds-mds1"
+alias tds-oss1="atlas-tds-oss1"
+
+
+## cmake alias
+alias dmake="cmake $1 -DCMAKE_BUILD_TYPE=Debug"
+
+##  TMUX
+
+alias tm="tmux attach || tmux new"
+alias tmux-k="tmux kill-session"
+alias tmux-ls="tmux ls"
+alias tmux-a="tmux attach-session -d"
+alias tmux-n="tmux new-session"
+
+## GNU global
+#
+# -a make alphabetical index
+# -D generate tag list dynamically
+# -F use frame for top page
+# -f add search form using CGI
+# -g execute gtags before starting job
+# -h insert function header?
+# -I use Icon?
+# -n line number
+# -o other files in addtion to source file
+# -s make archor for symbols as well
+# -T use table tag for file index
+#
+alias gencalls="find . -name *.[ch] | xargs cflow --tree --format=posix > cflow.out"
+alias gentags="gencalls; htags -agnosT -fF --fixed-guide --auto-completion --tree-view=filetree --call-tree cflow.out"
+
+## PIKE
+alias xcat-env="source /etc/profile.d/xcat.sh;source /etc/profile.d/gss-xcat.sh"
+
+## SMITHY
+alias sm-env="source /sw/tools/smithy/environment.sh"
+
+## Count LOC
+alias loc="find . -name *.cc -or -name *.h -or -name *.sh -or -name *.c | xargs wc -l"
+
+if [[ $HOSTNAME == picard ]]; then
+    alias cos1="ssh 192.168.92.165"
+elif [[ $HOSTNAME == peach* ]]; then
+    alias ct0="ssh 192.168.98.134"
+fi
+
+## Handbrake
+
+alias hb="HandBrakeCLI"
+
+
+# set homebrew
+
+export HOMEBREW_GITHUB_API_TOKEN="30b9e58de018c8169fbd216b8dc44090ba964fc6"
+
+#########################################
+# ubuntu alias
+#########################################
+
+
+
+# clean up all packages with "rc", removed but configuration files
+alias ub_pkg_clean='dpkg --list |grep "^rc" | cut -d " " -f 3 | xargs dpkg --purge'
+
+
+
+
+
+
+
+
+#########################################
+# git alias
+#########################################
+
+# %h abbrev hash
+# %an author name
+# %ar author date, relative
+# %s subject
+# https://git-scm.com/book/en/v2/Git-Basics-Viewing-the-Commit-History
+
+alias git-log-pretty='git log --pretty=format:"%C(yellow)%h%C(reset) - %an, %ar : %s"'
+
+test -e "${HOME}/.iterm2_shell_integration.bash" && source "${HOME}/.iterm2_shell_integration.bash"
+
+alias gitzip="git archive --format zip --output repo.zip master"
+
+
+#########################################
+# VM  alias
+#########################################
+
+
+
+if [[ $HOSTNAME == pegasus* ]]; then
+    alias gdev1="ssh root@172.16.139.10"
+    alias gdev2="ssh root@172.16.139.11"
+    alias gdev3="ssh root@172.16.139.12"
+    alias gdev4="ssh root@172.16.139.13"
+    alias ldev1="ssh root@172.16.139.20"
+    alias dev1="ssh 172.16.139.134"
+fi
+
+if [[ $HOSTNAME == po* ]]; then
+    alias gdev1="ssh root@172.16.236.10"
+fi
+
+
+if [[ $HOSTNAME == gdev* ]]; then
+    export PATH=/usr/lpp/mmfs/bin:$PATH
+fi
+
+#########################################
+# modules
+#########################################
+
+
+if [ -f /usr/local/opt/modules/Modules/init/bash ]; then
+    source /usr/local/opt/modules/Modules/init/bash
+fi
+
+#########################################
+# spacks
+#########################################
+#if [ -d ~/spack ]; then
+#    export PATH=~/spack/bin:$PATH
+#    export SPACK_ROOT=~/spack
+#    source ~/spack/share/spack/setup-env.sh
+#
+#fi
+
+if [ -d /mnt/c/WINDOWS ] || [ $LC_WINDOWS10 ]; then
+  export WINDOWS10=0
+fi
+if [ $WINDOWS10 ]; then
+  export LC_WINDOWS10=$WINDOWS10
+fi
+
+alias sync_book_to_pi="rsync -a --progress -e ssh f7b@pico.local:~/Documents/Books/ ~/Documents/Books/"
+
+
+#########################################
+# Summit
+#########################################
+
+alias bsub1="bsub -W 24:00 -nnodes 1 -q storage -P STF006Accept -Is /bin/bash"
+alias summit="ssh -X -I /usr/local/lib/opensc-pkcs11.so fwang2@summit.olcf.ornl.gov"
+alias summitsftp='sftp -o SmartcardDevice=/usr/local/lib/opensc-pkcs11.so fwang2@summit.olcf.ornl.gov'
+
+#########################################
+# Dart
+#########################################
+export PATH="$PATH":"$HOME/.pub-cache/bin"
+export PATH="$PATH":"$HOME/flutter/bin"
+
+
+
+#########################################
+# Anaconda3
+#########################################
+
+# added by Anaconda3 2019.03 installer
+# >>> conda init >>>
+# !! Contents within this block are managed by 'conda init' !!
+__conda_setup="$(CONDA_REPORT_ERRORS=false '/anaconda3/bin/conda' shell.bash hook 2> /dev/null)"
+if [ $? -eq 0 ]; then
+    \eval "$__conda_setup"
+else
+    if [ -f "/anaconda3/etc/profile.d/conda.sh" ]; then
+        . "/anaconda3/etc/profile.d/conda.sh"
+        CONDA_CHANGEPS1=false conda activate base
+    else
+        \export PATH="/anaconda3/bin:$PATH"
+    fi
+fi
+unset __conda_setup
+# <<< conda init <<<
+# added by Anaconda3 2019.07 installer
+# >>> conda init >>>
+# !! Contents within this block are managed by 'conda init' !!
+__conda_setup="$(CONDA_REPORT_ERRORS=false '/anaconda3/bin/conda' shell.bash hook 2> /dev/null)"
+if [ $? -eq 0 ]; then
+    \eval "$__conda_setup"
+else
+    if [ -f "/anaconda3/etc/profile.d/conda.sh" ]; then
+        . "/anaconda3/etc/profile.d/conda.sh"
+        CONDA_CHANGEPS1=false conda activate base
+    else
+        \export PATH="/anaconda3/bin:$PATH"
+    fi
+fi
+unset __conda_setup
+# <<< conda init <<<
+# added by Anaconda3 2019.10 installer
+# >>> conda init >>>
+# !! Contents within this block are managed by 'conda init' !!
+__conda_setup="$(CONDA_REPORT_ERRORS=false '/opt/anaconda3/bin/conda' shell.bash hook 2> /dev/null)"
+if [ $? -eq 0 ]; then
+    \eval "$__conda_setup"
+else
+    if [ -f "/opt/anaconda3/etc/profile.d/conda.sh" ]; then
+        . "/opt/anaconda3/etc/profile.d/conda.sh"
+        CONDA_CHANGEPS1=false conda activate base
+    else
+        \export PATH="/opt/anaconda3/bin:$PATH"
+    fi
+fi
+unset __conda_setup
+# <<< conda init <<<
+eval $(/ccs/home/fwang2/.linuxbrew/bin/brew shellenv)
