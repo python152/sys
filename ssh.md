@@ -1,4 +1,4 @@
-# ssh notes
+# SSH 
 
 ## Multiple host jump 
 
@@ -39,3 +39,7 @@ Host x2.local
    AddressFamily inet
 ```
 
+## References
+
+* https://wiki.gentoo.org/wiki/SSH_jump_host
+* https://superuser.com/questions/96489/an-ssh-tunnel-via-multiple-hops
