@@ -22,7 +22,35 @@ Host pie
 With this configuration, I can just run `ssh pie`.
 
 
-## Trouble Shoot
+## HTTP Tunneling
+
+With ssh jump set up in place, the following command will setup the tunneling:
+
+    ssh -C -f -N -D 9090 pie
+
+Here are the explainations:
+
+* `-C`: use data compression
+* `-f`: put it to background
+* `-N`: don't run any remote command
+* `-D 9090`: Run SOCKS5 server on port 9090
+
+Once authenticated, it should just return and ssh is put in the background
+
+For system wide setup, we can:
+
+* manual proxy: SOCKS5, 127.0.0.1, port 9090
+* auto DNS proxy
+
+Firefox supports override this so other browswer won't be impacted.
+
+To verify:
+
+* connect to https://mattermost.ccs.ornl.gov
+
+
+
+
 
 ### ssh to vm local (created by vmfusion) takes a long time using hostname
 
