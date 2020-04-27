@@ -1,5 +1,26 @@
 # ssh notes
 
+## Multiple host jump 
+
+OpenSSH 7.3 above project `-J` option:
+
+    ssh -J jumpuser1@jumphost1,jumpuser2@jumphost2,...,jumpuserN@jumphostN user@target_host
+    
+As an example, I can jump to my `pie.ornl.gov`:
+
+    ssh -J login1.ornl.gov pie
+
+
+If preferred, the following configuration can be used `.ssh/config`:
+
+```
+Host pie
+    HostName pie.ornl.gov
+    ProxyJump login1.ornl.gov
+```
+
+With this configuration, I can just run `ssh pie`.
+
 
 ## Trouble Shoot
 
