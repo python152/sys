@@ -145,6 +145,13 @@ alias testbed-mgmt1="ssh fwang2@testbed-mgmt1"
 alias pike-mgmt1="ssh fwang2@pike-mgmt1"
 alias rhea="ssh -X -I /usr/local/lib/opensc-pkcs11.so fwang2@rhea.ccs.ornl.gov"
 
+# -C compress data
+# -f request ssh to go to background
+# -N don't execute remote command
+# -D create SOCKS5 server on port 9090
+# 
+alias pie="ssh -C -f -N -D 9090 pie"
+
 # need to go into cave first
 alias lustre-mgmt1="ssh fwang2@lustre-mgmt1"
 alias sudo-mgmt="sudo /opt/eas/bin/eash"
