@@ -6,15 +6,19 @@
     - [Check cluster health](#check-cluster-health)
     - [Check at the shard level](#check-at-the-shard-level)
     - [List all index(s)](#list-all-indexs)
+    - [Show mapping of an index](#show-mapping-of-an-index)
+    - [Refresh index](#refresh-index)
+    - [Delete index](#delete-index)
     - [Document counts](#document-counts)
   - [Create, Delete and Retrieval](#create-delete-and-retrieval)
     - [PUT to create new entry](#put-to-create-new-entry)
     - [Bulk API](#bulk-api)
-    - [GET to retrieve an entry](#get-to-retrieve-an-entry)
-    - [Partial retrieval](#partial-retrieval)
+    - [GET to retrieve an entry by ID](#get-to-retrieve-an-entry-by-id)
+    - [GET to retrieve a fix number of entries](#get-to-retrieve-a-fix-number-of-entries)
+    - [Get to retrieve only certain field(s)](#get-to-retrieve-only-certain-fields)
     - [HEAD for checking existence](#head-for-checking-existence)
     - [Delete single document](#delete-single-document)
-    - [Delete index](#delete-index)
+    - [Delete index](#delete-index-1)
   
 
 ## Meta operations
@@ -43,6 +47,39 @@ curl -XGET 'http://localhost:9200/_cat/indices?v'
 
 [Click here for more
 information](https://www.elastic.co/guide/en/elasticsearch/reference/current/cat-indices.html)
+
+For KB, this can be done by:
+```
+GET /_cat/indices?pretty
+```
+
+### Show mapping of an index
+
+```
+GET /summit_darshan/_mapping 
+```
+
+### Refresh index
+
+```
+POST /summit_darshan/_refresh
+```
+
+This can be useful for it to show up in search immediately. By default, ES refresh every 1 seconds, but only on indices that has been accessed once or more over the last 30 seconds.
+
+To refresh all indices:
+```
+POST /_refresh
+```
+
+
+### Delete index 
+
+For KB, this will be:
+
+```
+DELETE /summit_darshan
+```
 
 ### Document counts
 
@@ -100,19 +137,24 @@ $ curl -s -H "Content-Type: application/x-ndjson" -XPOST localhost:9200/_bulk
 ```sh
 $ cat ex_delete
 {"delete": {"_index": "test", "_id": "1"}}
-
 ```
 
 
-### GET to retrieve an entry
+
+### GET to retrieve an entry by ID
 
 ```sh
 curl -XGET "http://localhost:9200/foo/bar/9999"
 ```
 
+### GET to retrieve a fix number of entries
+
+```
+GET summit_darshan/_search?size=10
+```
 
 
-### Partial retrieval
+### Get to retrieve only certain field(s)
 
 ```sh
 curl -XGET "http://localhost:9200/foo/bar/9999?_source=name,department"

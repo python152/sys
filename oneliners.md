@@ -1,5 +1,12 @@
 # One liners
 
+
+## Direct output to both console and file
+
+```sh
+SomeCommand 2>&1 | tee SomeFile.txt
+```
+
 ## Copy a fix number of files from one directory to another
 
 ```sh
