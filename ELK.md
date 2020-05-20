@@ -1,4 +1,3 @@
-
 # ELK
 
 - [ELK](#elk)
@@ -20,7 +19,6 @@
     - [Delete single document](#delete-single-document)
     - [Delete index](#delete-index-1)
   
-
 ## Meta operations
 
 ### Check cluster health
@@ -179,3 +177,6 @@ curl -XDELETE localhost:9200/indexName/type/doc_id
 curl -XDELETE localhost:9200/indexName
 ```
 
+# Lucene Query
+
+Here is the [Lucene Query Syntax](https://www.elastic.co/guide/en/elasticsearch/reference/7.7/query-dsl-query-string-query.html#query-string-syntax)
