@@ -392,8 +392,8 @@ else
     alias vi="vim"
 fi
 
-alias debug-rhea1="salloc -A stf008 -p -N 1 -t 12:00:00"
-alias debug-rhea4="salloc -A stf008 -p -N 4 -t 12:00:00"
+alias debug-rhea1="salloc -A stf008  -N 1 -t 12:00:00"
+alias debug-rhea4="salloc -A stf008  -N 4 -t 12:00:00"
 alias debug4="qsub -I -A stf008 -q debug -l nodes=4,walltime=60:00"
 alias debug1="qsub -I -A stf008 -q debug -l nodes=1,walltime=60:00"
 alias titan4="qsub -I -A stf008 -l nodes=4,walltime=60:00"
