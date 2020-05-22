@@ -392,7 +392,8 @@ else
     alias vi="vim"
 fi
 
-
+alias debug-rhea1="salloc -A stf008 -p -N 1 -t 12:00:00"
+alias debug-rhea4="salloc -A stf008 -p -N 4 -t 12:00:00"
 alias debug4="qsub -I -A stf008 -q debug -l nodes=4,walltime=60:00"
 alias debug1="qsub -I -A stf008 -q debug -l nodes=1,walltime=60:00"
 alias titan4="qsub -I -A stf008 -l nodes=4,walltime=60:00"
@@ -590,11 +591,11 @@ if [ $? -eq 0 ]; then
     \eval "$__conda_setup"
 else
     if [ -f "/opt/anaconda3/etc/profile.d/conda.sh" ]; then
-        . "/opt/anaconda3/etc/profile.d/conda.sh"
+# . "/opt/anaconda3/etc/profile.d/conda.sh"  # commented out by conda initialize
         CONDA_CHANGEPS1=false conda activate base
     else
         \export PATH="/opt/anaconda3/bin:$PATH"
     fi
 fi
 unset __conda_setup
-# <<< conda init <<<
+
